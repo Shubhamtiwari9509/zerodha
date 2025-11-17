@@ -45,7 +45,7 @@ passport.deserializeUser(User.deserializeUser());
 
  
 app.get("/signup",(req,res)=>{
-    res.redirect(`${process.env.FRONTEND_URL}/Signup`);
+    res.redirect(`${process.env.FRONTEND_URL}/signup`);
 })
 app.post("/signup", async (req, res) => {
   const { email, username, password } = req.body;
@@ -58,7 +58,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 app.get("/login",(req,res)=>{
-    res.redirect( `${FRONTEND_URL}/Login`);
+    res.redirect( `${FRONTEND_URL}/login`);
 })
 
 
