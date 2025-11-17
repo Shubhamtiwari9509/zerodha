@@ -30,12 +30,12 @@ function Navbar() {
           <form class="d-flex" role="search">
             <ul class="navbar-nav mb-lg-0">
               <li class="nav-item">
-                <Link class="nav-link active" aria-current="page" to= {`${BACKEND_URL}/signup`}>
+                <Link class="nav-link active" aria-current="page" to="https://zerodha-project-d4eb.onrender.com/signup">
                  Signup
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link active" aria-current="page" to={`${BACKEND_URL}/login`}>
+                <Link class="nav-link active" aria-current="page" to="https://zerodha-project-d4eb.onrender.com/login">
                   Login
                 </Link>
               </li>

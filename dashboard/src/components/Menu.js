@@ -43,7 +43,7 @@ const Menu = () => {
   };
 
   const handleLogout = () => {
-    axios.get(`${BACKEND_URL}/logout`, { withCredentials: true })
+    axios.get("https://zerodha-project-d4eb.onrender.com//logout", { withCredentials: true })
       .then(() => {
         //frontend 
         window.location.href = "https://zerodha-project-eight.vercel.app/"; 
