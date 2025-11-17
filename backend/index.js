@@ -119,6 +119,7 @@ app.listen(port,()=>{
     console.log("Server Start");
     mongoose.connect(url);
     console.log("DB connected  ");
+   
 });
 
  
