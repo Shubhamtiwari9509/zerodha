@@ -16,11 +16,12 @@ const Signup = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${BACKEND_URL}/signup`, formData);
+      const res = await axios.post("https://zerodha-project-d4eb.onrender.com/signup", formData);
       setMessage(res.data.message);
       setError('');
       setTimeout(() => {
-        window.location.href = `${DASHBOARD_URL}/`;
+        //dash
+        window.location.href = "https://zerodha-project-khsr.vercel.app/";
       }, 1500);
     } catch (err) {
       console.log(err);

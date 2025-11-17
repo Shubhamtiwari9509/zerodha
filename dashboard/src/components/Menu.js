@@ -10,17 +10,17 @@ const Menu = () => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    axios.get(`${BACKEND_URL}/check-auth`, { withCredentials: true })
+    axios.get("https://zerodha-project-d4eb.onrender.com/check-auth", { withCredentials: true })
       .then(res => {
         if (res.data.authenticated) {
           setUsername(res.data.user.username);
         } else {
-          window.location.href =`${BACKEND_URL}/login`;
+          window.location.href ="https://zerodha-project-d4eb.onrender.com/login";
         }
       })
       .catch(err => {
         console.error('Auth check failed:', err);
-        window.location.href =`${BACKEND_URL}/login`;
+        window.location.href ="https://zerodha-project-d4eb.onrender.com/login";
       });
   }, []);
 
@@ -45,7 +45,8 @@ const Menu = () => {
   const handleLogout = () => {
     axios.get(`${BACKEND_URL}/logout`, { withCredentials: true })
       .then(() => {
-        window.location.href = `${FRONTEND_URL}/`;
+        //frontend 
+        window.location.href = "https://zerodha-project-eight.vercel.app/"; 
       })
       .catch(err => {
         console.error('Logout failed:', err);

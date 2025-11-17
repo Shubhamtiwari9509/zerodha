@@ -16,9 +16,10 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${BACKEND_URL}/login`, formData);
+      const res = await axios.post("https://zerodha-project-d4eb.onrender.com/login", formData);
       if (res.data.message === 'Login successful') {
-        window.location.href = `${DASHBOARD_URL}/`;
+        //dash
+        window.location.href = "https://zerodha-project-khsr.vercel.app/";
       }
     } catch (err) {
       setErrorMessage(err.response?.data?.error || 'Login failed');

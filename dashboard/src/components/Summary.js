@@ -6,17 +6,19 @@ const Summary = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    axios.get(`${BACKEND_URL}/check-auth`, { withCredentials: true })
+    axios.get("https://zerodha-project-d4eb.onrender.com/check-auth", { withCredentials: true })
       .then(res => {
         if (res.data.authenticated) {
           setUsername(res.data.user.username);
         } else {
-          window.location.href = `${FRONTEND_URL}/Login`;
+          // front
+          window.location.href = "https://zerodha-project-eight.vercel.app/Login";
         }
       })
       .catch(err => {
         console.error('Auth check failed:', err);
-        window.location.href =  `${FRONTEND_URL}/Login`;
+        // front 
+        window.location.href =  "https://zerodha-project-eight.vercel.app/Login";
       });
   }, []);
 
