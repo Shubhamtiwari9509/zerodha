@@ -19,7 +19,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL;
 const DASHBOARD_URL = process.env.DASHBOARD_URL;
 const BACKEND_URL = process.env.BACKEND_URL;
 
-// ✅ CORS setup with env URLs
+//  CORS setup with env URLs
 app.use(cors({
   origin: [FRONTEND_URL, DASHBOARD_URL],
   credentials: true
@@ -27,7 +27,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-// ✅ Session config (dev vs prod)
+//  Session config (dev vs prod)
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -39,14 +39,14 @@ app.use(session({
   }
 }));
 
-// ✅ Passport setup
+//  Passport setup
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// ✅ Routes
+//  Routes
 app.get("/signup", (req, res) => {
   res.redirect(`${FRONTEND_URL}/signup`);
 });
@@ -99,7 +99,7 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// ✅ Example data routes
+//  Example data routes
 app.get("/allholdings", async (req, res) => {
   let holdings = await holding.find({});
   res.json(holdings);
@@ -121,7 +121,7 @@ app.post("/newOrder", async (req, res) => {
   res.send("order saved!");
 });
 
-// ✅ Start server
+//  Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
   mongoose.connect(url);

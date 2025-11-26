@@ -5,7 +5,7 @@ import axios from "axios";
 import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 
-// ✅ Backend URL from environment
+//  Backend URL from environment
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const BuyActionWindow = ({ uid }) => {
@@ -22,7 +22,7 @@ const BuyActionWindow = ({ uid }) => {
           price: stockPrice,
           mode: "BUY",
         },
-        { withCredentials: true } // ✅ send cookies for session
+        { withCredentials: true } //  send cookies for session
       );
       GeneralContext.closeBuyWindow();
     } catch (error) {

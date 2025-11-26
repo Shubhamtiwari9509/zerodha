@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { VerticalGraph } from "./VerticalGraph";
 
-// ✅ Backend URL from environment
+//  Backend URL from environment
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Holdings = () => {
@@ -10,7 +10,7 @@ const Holdings = () => {
 
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/allholdings`, { withCredentials: true }) // ✅ use env + send cookies
+      .get(`${BACKEND_URL}/allholdings`, { withCredentials: true }) //  use env + send cookies
       .then((res) => {
         setAllHoldings(res.data);
       })

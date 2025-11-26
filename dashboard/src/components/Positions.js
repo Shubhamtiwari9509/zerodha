@@ -10,7 +10,7 @@ const Positions = () => {
     const fetchPositions = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/allpositions`, {
-          withCredentials: true, // ✅ send cookies for session
+          withCredentials: true, //  send cookies for session
         });
         setAllPosition(res.data);
       } catch (err) {
