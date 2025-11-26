@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import HomePage from './landing-page/home/HomePage';
- import {BrowserRouter,Routes,Route} from "react-router-dom";
+ import { HashRouter,Routes,Route} from "react-router-dom";
  import PricingPage from './landing-page/pricing/PricingPage';
  import AboutPage from './landing-page/about/AboutPage';
  import ProductsPage from './landing-page/products/ProductsPage';
@@ -15,7 +15,8 @@ import Footer from './Footer'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-   <BrowserRouter>
+    <HashRouter>
+
    <Navbar/>
    <Routes>
     <Route path="/" element={<HomePage/>}></Route>
@@ -28,5 +29,6 @@ root.render(
     <Route path="*" element={<PageNotFound/>}></Route>
    </Routes>
    <Footer/>
-   </BrowserRouter>
+    </HashRouter>
+
 );
