@@ -1,17 +1,23 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
-const BACKEND_URL=process.env.REACT_APP_BACKEND_URL;
-//import { positions } from "./data/data";
-
 const Positions = () => {
-  const [allPosition,setAllPosition]=useState([]);
-  useEffect(()=>{
+  const [allPosition, setAllPosition] = useState([]); 
 
-    axios.get("https://zerodha-project-d4eb.onrender.com/allpositions").then((res)=>{
-      // console.log(res.data);
-      setAllPosition(res.data);
-    })
- })
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/allpositions", {
+          withCredentials: true,
+        });
+        setAllPosition(res.data);
+      } catch (err) {
+        console.error("Error fetching positions:", err);
+      }
+    };
+
+    fetchPositions();
+  }, []);
+
   return (
     <>
       <h3 className="title">Positions ({allPosition.length})</h3>

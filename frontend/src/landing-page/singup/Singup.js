@@ -1,8 +1,8 @@
 // Signup.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const DASHBOARD_URL=process.env.REACT_APP_DASHBOARD_URL;
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const DASHBOARD_URL=process.env.REACT_APP_DASHBOARD_URL;
 
 const Signup = () => {
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
@@ -16,13 +16,13 @@ const Signup = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://zerodha-project-d4eb.onrender.com/signup", formData);
+      const res = await axios.post("http://localhost:8080/signup", formData, { withCredentials: true });
       setMessage(res.data.message);
       setError('');
       setTimeout(() => {
         //dash
-        window.location.href = "https://zerodha-project-khsr.vercel.app/";
-      }, 1500);
+        window.location.href = "http://localhost:3001/";
+      }, 1000);
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.error || 'Signup failed');

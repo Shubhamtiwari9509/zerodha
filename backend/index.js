@@ -13,8 +13,11 @@ const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const User=require("./schemas/user");
 const cors=require("cors");
+const BACKEND_URL=process.env.BACKEND_URL;
+const FRONTEND_URL=process.env.FRONTEND_URL;
+const DASHBOARD_URL=process.env.DASHBOARD_URL;
 app.use(cors({
-  origin: [ "https://zerodha-project-eight.vercel.app/","https://zerodha-project-khsr.vercel.app/" ],
+  origin: [ "http://localhost:3001","http://localhost:3000" ],
   credentials: true
 }));
 
@@ -32,7 +35,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    sameSite: 'lax'
+    sameSite: 'none',
+    secure: true,
   }
 }));
 
@@ -45,24 +49,30 @@ passport.deserializeUser(User.deserializeUser());
 
  
 app.get("/signup",(req,res)=>{
-    res.redirect("https://zerodha-project-eight.vercel.app/signup");
+  console.log("lllssss");
+    res.redirect("http://localhost:3000/signup");
 })
-app.post("/signup", async (req, res) => {
+app.post("/signup", async (req, res,next) => {
+  console.log("lllsss2");
   const { email, username, password } = req.body;
   try {
     const newUser = new User({ email, username });
     await User.register(newUser, password);
-    res.status(200).json({ message: "Signup successful!" });
+   req.login(newUser, (err) => {
+  if (err) return next(err);
+  return res.status(200).json({ message: 'Signup & login successful!', user: newUser });
+});
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 app.get("/login",(req,res)=>{
-    res.redirect("https://zerodha-project-eight.vercel.app/login");
+  console.log("lll");
+    res.redirect("http://localhost:3000/login");
 })
 
-
 app.post('/login', (req, res, next) => {
+  console.log("lll22");
   passport.authenticate('local', (err, user, info) => {
     if (err) return res.status(500).json({ error: err.message });
     if (!user) return res.status(401).json({ error: 'Invalid credentials' });
@@ -96,13 +106,17 @@ app.get("/logout",(req,res)=>{
 
  
 app.get("/allholdings",async(req,res)=>{
-    let allholdings= await  holding.find({});
-    res.json(allholdings);
+  console.log("hellllll");
+    let holdings= await  holding.find({});
+    res.json(holdings);
+      
 });
 
 app.get("/allpositions",async(req,res)=>{
+  console.log("helppppppl");
     let allpositions= await position.find({});
     res.json(allpositions);
+     
 });
 
 app.post("/newOrder",async(req,res)=>{
@@ -118,7 +132,7 @@ app.post("/newOrder",async(req,res)=>{
 app.listen(port,()=>{
     console.log("Server Start");
     mongoose.connect(url);
-    console.log("DB connected  !  ");
+    console.log("DB connected  !  ",port);
 });
 
  

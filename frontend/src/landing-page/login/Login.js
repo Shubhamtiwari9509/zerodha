@@ -1,9 +1,7 @@
 // Login.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
-axios.defaults.withCredentials = true;
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const DASHBOARD_URL=process.env.REACT_APP_DASHBOARD_URL;
+ 
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -16,10 +14,12 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://zerodha-project-d4eb.onrender.com/login", formData);
+      const res = await axios.post("http://localhost:8080/login", formData ,{ withCredentials: true
+});
+     
       if (res.data.message === 'Login successful') {
         //dash
-        window.location.href = "https://zerodha-project-khsr.vercel.app/";
+        window.location.href = "http://localhost:3001/";
       }
     } catch (err) {
       setErrorMessage(err.response?.data?.error || 'Login failed');

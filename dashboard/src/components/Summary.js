@@ -5,22 +5,21 @@ const FRONTEND_URL=process.env.REACT_APP_FRONTEND_URL;
 const Summary = () => {
   const [username, setUsername] = useState("");
 
-  useEffect(() => {
-    axios.get("https://zerodha-project-d4eb.onrender.com/check-auth", { withCredentials: true })
-      .then(res => {
-        if (res.data.authenticated) {
-          setUsername(res.data.user.username);
-        } else {
-          // front
-          window.location.href = "https://zerodha-project-eight.vercel.app/Login";
-        }
-      })
-      .catch(err => {
-        console.error('Auth check failed:', err);
-        // front 
-        window.location.href =  "https://zerodha-project-eight.vercel.app/Login";
-      });
-  }, []);
+ 
+  useEffect(()=>{
+    axios.get("http://localhost:8080/check-auth",{ withCredentials: true }).then((res)=>{
+      if(res.data.authenticated){
+        setUsername(res.data.user.username);
+      }
+      else{
+        window.location.href="http://localhost:3000/login";
+      }
+    })
+    .catch((err)=>{
+      console.error("Auth cheack failed",err);
+       window.location.href="http://localhost:3000/login";
+    })
+  },[]);
 
   return (
     <>

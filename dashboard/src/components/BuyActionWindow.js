@@ -6,14 +6,14 @@ import axios from "axios";
 import GeneralContext from "./GeneralContext";
 
 import "./BuyActionWindow.css";
-const BACKEND_URL=process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL=process.env.REACT_APP_BACKEND_URL;
 
 const BuyActionWindow = ({ uid }) => {
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
 
   const handleBuyClick = () => {
-    axios.post("https://zerodha-project-d4eb.onrender.com/newOrder", {
+    axios.post("http://localhost:8080/newOrder", {
       name: uid,
       qty: stockQuantity,
       price: stockPrice,

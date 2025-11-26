@@ -2,27 +2,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import './Menu.css';
-const BACKEND_URL=process.env.REACT_APP_BACKEND_URL;
-const FRONTEND_URL=process.env.REACT_APP_FRONTEND_URL;
+// const BACKEND_URL=process.env.REACT_APP_BACKEND_URL;
+// const FRONTEND_URL=process.env.REACT_APP_FRONTEND_URL;
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [username, setUsername] = useState('');
 
-  useEffect(() => {
-    axios.get("https://zerodha-project-d4eb.onrender.com/check-auth", { withCredentials: true })
-      .then(res => {
-        if (res.data.authenticated) {
-          setUsername(res.data.user.username);
-        } else {
-          window.location.href ="https://zerodha-project-d4eb.onrender.com/login";
-        }
-      })
-      .catch(err => {
-        console.error('Auth check failed:', err);
-        window.location.href ="https://zerodha-project-d4eb.onrender.com/login";
-      });
-  }, []);
+
+  useEffect(()=>{
+    axios.get("http://localhost:8080/check-auth",{ withCredentials: true }).then((res)=>{
+      if(res.data.authenticated){
+        setUsername(res.data.user.username);
+      }
+      else{
+        window.location.href="http://localhost:3000/login";
+      }
+    })
+    .catch((err)=>{
+      console.error("Auth cheack failed",err);
+       window.location.href="http://localhost:3000/login";
+    })
+  },[]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -43,10 +44,10 @@ const Menu = () => {
   };
 
   const handleLogout = () => {
-    axios.get("https://zerodha-project-d4eb.onrender.com//logout", { withCredentials: true })
+    axios.get("http://localhost:8080/logout", { withCredentials: true })
       .then(() => {
         //frontend 
-        window.location.href = "https://zerodha-project-eight.vercel.app/"; 
+        window.location.href = "http://localhost:3000/"; 
       })
       .catch(err => {
         console.error('Logout failed:', err);
@@ -78,7 +79,7 @@ const Menu = () => {
           <div className="profile-dropdown">
             <ul>
               <li><Link to="/profile">My Profile</Link></li><br></br>
-              <li><Link to="/settings">Settings</Link></li><br></br>
+              <li><Link to="/setting">Settings</Link></li><br></br>
               <li><button onClick={handleLogout}>Logout</button></li>
             </ul>
           </div>
