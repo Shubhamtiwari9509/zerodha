@@ -6,7 +6,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const DASHBOARD_URL = process.env.REACT_APP_DASHBOARD_URL;
 
 const Login = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ userName: '', password: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = e => {
@@ -16,17 +16,16 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `${BACKEND_URL}/login`,
-        formData,
-        { withCredentials: true }
-      );
+      const res = await axios.post(`${BACKEND_URL}/login`, formData, { withCredentials: true });
+      setErrorMessage(res.data.message || "Login successfully");
+      localStorage.setItem("token", res.data.token);
 
-      if (res.data.message === 'Login successful') {
-        window.location.href = `${DASHBOARD_URL}/`;
+      // Redirect to dashboard
+      if (DASHBOARD_URL) {
+        window.location.href =DASHBOARD_URL;
       }
-    } catch (err) {
-      setErrorMessage(err.response?.data?.error || 'Login failed');
+    } catch (e) {
+      setErrorMessage(e.response?.data?.message || "Login failed");
     }
   };
 
@@ -73,7 +72,7 @@ const Login = () => {
       transition: 'background-color 0.3s ease'
     },
     error: {
-      color: 'red',
+      color: 'green',
       marginTop: '10px',
       textAlign: 'center'
     }
@@ -86,7 +85,7 @@ const Login = () => {
         <input
           style={styles.input}
           type="text"
-          name="username"
+          name="userName"  
           placeholder="Username"
           onChange={handleChange}
           required

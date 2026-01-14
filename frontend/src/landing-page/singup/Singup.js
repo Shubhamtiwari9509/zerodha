@@ -6,9 +6,9 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const DASHBOARD_URL = process.env.REACT_APP_DASHBOARD_URL;
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({ userName: '', email: '', password: '' });
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,27 +18,33 @@ const Signup = () => {
     e.preventDefault();
     try {
       const res = await axios.post(`${BACKEND_URL}/signup`, formData, { withCredentials: true });
-      setMessage(res.data.message);
-      setError('');
-      setTimeout(() => {
-        window.location.href = `${DASHBOARD_URL}/`;
-      }, 1000);
+      setFeedbackMessage(res.data.message || "Signup successful");
+      setIsError(false);
+
+      // Store token if backend sends it
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+
+      // Redirect to dashboard
+      if (DASHBOARD_URL) {
+        window.location.href =DASHBOARD_URL;
+      }
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.error || 'Signup failed');
-      setMessage('');
+      setFeedbackMessage(err.response?.data?.message|| "Signup failed");
+      setIsError(true);
     }
   };
 
   useEffect(() => {
-    if (message || error) {
+    if (feedbackMessage) {
       const timer = setTimeout(() => {
-        setMessage('');
-        setError('');
+        setFeedbackMessage('');
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [message, error]);
+  }, [feedbackMessage]);
 
   const styles = {
     wrapper: {
@@ -82,17 +88,11 @@ const Signup = () => {
       cursor: 'pointer',
       transition: 'background-color 0.3s ease'
     },
-    message: {
+    feedback: {
       textAlign: 'center',
       marginBottom: '16px',
       fontSize: '14px',
-      color: 'green'
-    },
-    error: {
-      textAlign: 'center',
-      marginBottom: '16px',
-      fontSize: '14px',
-      color: 'red'
+      color: isError ? 'red' : 'green'
     }
   };
 
@@ -100,12 +100,11 @@ const Signup = () => {
     <div style={styles.wrapper}>
       <form style={styles.card} onSubmit={handleSubmit}>
         <div style={styles.heading}>Create your account</div>
-        {message && <div style={styles.message}>{message}</div>}
-        {error && <div style={styles.error}>{error}</div>}
+        {feedbackMessage && <div style={styles.feedback}>{feedbackMessage}</div>}
         <input
           style={styles.input}
           type="text"
-          name="username"
+          name="userName"   // ✅ updated to match backend
           placeholder="Username"
           onChange={handleChange}
           required

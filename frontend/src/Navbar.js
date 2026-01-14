@@ -49,7 +49,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link active" to="/AboutPage">
-                  About
+                  About  
                 </Link>
               </li>
               <li className="nav-item">

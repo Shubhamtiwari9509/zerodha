@@ -34,7 +34,7 @@ const Holdings = () => {
 
   return (
     <>
-      <h3 className="title">Holdings ({allHoldings.length})</h3>
+      <h3 className="title">Holdings {BACKEND_URL} ({allHoldings.length})</h3>
 
       <div className="order-table">
         <table>
